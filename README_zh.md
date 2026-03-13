@@ -3,44 +3,48 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/QuantProcessing/notify.svg)](https://pkg.go.dev/github.com/QuantProcessing/notify)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**English** | [中文](README_zh.md)
+[English](README.md) | **中文**
 
-A lightweight Go library for sending notifications via **Feishu (Lark)** and **Telegram**.
+轻量级 Go 通知库，支持 **飞书 (Lark)** 和 **Telegram**。
 
-## Features
+## 功能
 
-**Feishu / Lark**
-- Webhook messages (text, rich-text / post)
-- SDK-based messaging via official Lark Open Platform
-- Phone urgent call notifications
+**飞书 / Lark**
+- Webhook 消息（文本、富文本 / post）
+- 通过官方 Lark 开放平台 SDK 发送消息
+- 电话加急通知
 
 **Telegram**
-- Bot with chat ID whitelist middleware
-- Simple `Notify()` helper for one-off messages
-- Long-polling command handler with `Start()`
+- 带有 Chat ID 白名单中间件的 Bot
+- 简单的 `Notify()` 消息发送
+- 支持 `Start()` 长轮询接收命令
 
-## Requirements
+## 环境要求
 
 - Go 1.24+
 
-## Install
+## 安装
 
 ```bash
 go get github.com/QuantProcessing/notify
 ```
 
-Import only what you need:
+按需导入：
 
 ```go
 import "github.com/QuantProcessing/notify/feishu"
 import "github.com/QuantProcessing/notify/telegram"
 ```
 
-## Usage
+## 配置
 
-### Feishu
+参考 [.env.example](.env.example) 了解所需的环境变量。
 
-#### Quick Start (Global API)
+## 使用
+
+### 飞书
+
+#### 快速开始（全局 API）
 
 ```go
 package main
@@ -61,18 +65,18 @@ func main() {
 }
 ```
 
-#### Rich Text (Post)
+#### 富文本消息
 
 ```go
-err := feishu.SendRichText("Alert", [][]feishu.PostElem{
-    {feishu.NewTextElem("Server "), feishu.NewAElem("down", "https://example.com")},
+err := feishu.SendRichText("告警", [][]feishu.PostElem{
+    {feishu.NewTextElem("服务器 "), feishu.NewAElem("宕机", "https://example.com")},
     {feishu.NewAtElem("ou_user_id")},
 })
 ```
 
-#### Urgent Phone Call
+#### 电话加急
 
-Requires App ID, App Secret, and User Open ID:
+需要 App ID、App Secret 和 User Open ID：
 
 ```go
 feishu.Init(feishu.Config{
@@ -82,19 +86,19 @@ feishu.Init(feishu.Config{
     UserOpenID: "ou_xxx",
 })
 
-if err := feishu.SendUrgentText("CRITICAL: System Down!"); err != nil {
+if err := feishu.SendUrgentText("严重: 系统宕机!"); err != nil {
     log.Fatal(err)
 }
 ```
 
-#### Multi-Instance Usage
+#### 多实例用法
 
 ```go
 bot := feishu.NewBot(feishu.Config{
     Webhook: "https://open.feishu.cn/open-apis/bot/v2/hook/xxx",
 })
 
-if err := bot.SendText("Hello!"); err != nil {
+if err := bot.SendText("你好!"); err != nil {
     log.Fatal(err)
 }
 ```
@@ -103,7 +107,7 @@ if err := bot.SendText("Hello!"); err != nil {
 
 ### Telegram
 
-#### Quick Start (Global API)
+#### 快速开始（全局 API）
 
 ```go
 package main
@@ -116,27 +120,27 @@ import (
 func main() {
     if err := telegram.Init(telegram.Config{
         BotToken: "123456:ABC-DEF...",
-        ChatID:   "12345678",          // comma-separated for multiple
+        ChatID:   "12345678",          // 多个用逗号分隔
     }); err != nil {
         log.Fatal(err)
     }
 
-    if err := telegram.Notify("Trade executed: BUY 0.01 BTC @ $65,000"); err != nil {
+    if err := telegram.Notify("交易已执行: 买入 0.01 BTC @ $65,000"); err != nil {
         log.Fatal(err)
     }
 }
 ```
 
-#### Start Bot (Long Polling)
+#### 启动 Bot（长轮询）
 
 ```go
 ctx, cancel := context.WithCancel(context.Background())
 defer cancel()
 
-telegram.Start(ctx) // blocks until ctx is cancelled
+telegram.Start(ctx) // 阻塞直到 ctx 被取消
 ```
 
-#### Multi-Instance Usage
+#### 多实例用法
 
 ```go
 bot, err := telegram.NewBot(telegram.Config{
@@ -147,27 +151,27 @@ if err != nil {
     log.Fatal(err)
 }
 
-if err := bot.Notify("Hello!"); err != nil {
+if err := bot.Notify("你好!"); err != nil {
     log.Fatal(err)
 }
 ```
 
-## Architecture
+## 项目结构
 
 ```
 notify/
-├── feishu/          # Feishu (Lark) notification package
-│   ├── bot.go       # Global API + Bot struct
-│   ├── client.go    # HTTP webhook + Lark SDK client
-│   └── types.go     # Message type definitions
-├── telegram/        # Telegram notification package
-│   ├── bot.go       # Global API + Bot struct
-│   └── middleware.go # Chat ID authorization middleware
+├── feishu/          # 飞书 (Lark) 通知包
+│   ├── bot.go       # 全局 API + Bot 结构体
+│   ├── client.go    # HTTP webhook + Lark SDK 客户端
+│   └── types.go     # 消息类型定义
+├── telegram/        # Telegram 通知包
+│   ├── bot.go       # 全局 API + Bot 结构体
+│   └── middleware.go # Chat ID 鉴权中间件
 ├── go.mod
 ├── LICENSE          # MIT
 └── README.md
 ```
 
-## License
+## 许可证
 
 [MIT](LICENSE)
