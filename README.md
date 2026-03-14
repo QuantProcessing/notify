@@ -42,6 +42,19 @@ import "github.com/QuantProcessing/notify/telegram"
 npx skills add QuantProcessing/notify
 ```
 
+## Configuration
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `FEISHU_WEBHOOK` | Yes (Feishu) | Webhook URL for bot messages |
+| `FEISHU_APP_ID` | No | Lark App ID (for SDK features / urgent calls) |
+| `FEISHU_APP_SECRET` | No | Lark App Secret |
+| `FEISHU_USER_OPEN_ID` | No | User Open ID (for phone urgent calls) |
+| `TELEGRAM_BOT_TOKEN` | Yes (Telegram) | Telegram bot token |
+| `TELEGRAM_CHAT_ID` | Yes (Telegram) | Comma-separated chat IDs (first is default) |
+
+See [.env.example](.env.example) for a complete template.
+
 ## Usage
 
 ### Feishu

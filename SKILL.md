@@ -80,6 +80,17 @@ defer cancel()
 telegram.Start(ctx) // blocks until ctx is cancelled
 ```
 
+## Environment Variables
+
+| Variable | Package | Required | Description |
+|----------|---------|----------|-------------|
+| `FEISHU_WEBHOOK` | feishu | Yes | Webhook URL for bot messages |
+| `FEISHU_APP_ID` | feishu | No | Lark App ID (for SDK features / urgent calls) |
+| `FEISHU_APP_SECRET` | feishu | No | Lark App Secret |
+| `FEISHU_USER_OPEN_ID` | feishu | No | User Open ID (for phone urgent calls) |
+| `TELEGRAM_BOT_TOKEN` | telegram | Yes | Telegram bot token |
+| `TELEGRAM_CHAT_ID` | telegram | Yes | Comma-separated chat IDs |
+
 ## Common Mistakes
 
 - **Forgetting `Init()` before global functions** → returns `ErrNotInitialized`

@@ -44,7 +44,16 @@ npx skills add QuantProcessing/notify
 
 ## 配置
 
-参考 [.env.example](.env.example) 了解所需的环境变量。
+| 变量 | 必填 | 说明 |
+|------|------|------|
+| `FEISHU_WEBHOOK` | 是（飞书） | Webhook URL |
+| `FEISHU_APP_ID` | 否 | Lark App ID（SDK 功能 / 电话加急） |
+| `FEISHU_APP_SECRET` | 否 | Lark App Secret |
+| `FEISHU_USER_OPEN_ID` | 否 | 用户 Open ID（电话加急） |
+| `TELEGRAM_BOT_TOKEN` | 是（Telegram） | Telegram Bot Token |
+| `TELEGRAM_CHAT_ID` | 是（Telegram） | Chat ID，多个用逗号分隔（第一个为默认） |
+
+参考 [.env.example](.env.example) 获取完整模板。
 
 ## 使用
 
