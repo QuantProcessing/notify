@@ -36,6 +36,12 @@ import "github.com/QuantProcessing/notify/feishu"
 import "github.com/QuantProcessing/notify/telegram"
 ```
 
+### AI Agent 集成
+
+```bash
+npx skills add QuantProcessing/notify
+```
+
 ## 配置
 
 参考 [.env.example](.env.example) 了解所需的环境变量。

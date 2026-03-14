@@ -36,6 +36,12 @@ import "github.com/QuantProcessing/notify/feishu"
 import "github.com/QuantProcessing/notify/telegram"
 ```
 
+### AI Agent Integration
+
+```bash
+npx skills add QuantProcessing/notify
+```
+
 ## Usage
 
 ### Feishu
